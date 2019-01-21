@@ -1,12 +1,11 @@
 <?xml version="1.0"?>
-
 <!--
 /**********************************************************************************
- * $URL$
- * $Id$
+ * $URL: https://source.sakaiproject.org/contrib/etudes/ltiContact/trunk/pom.xml $
+ * $Id: pom.xml 86824 2014-08-01 17:06:55Z mallika@etudes.org $
  ***********************************************************************************
  *
- * Copyright (c) 2011, 2013 Etudes, Inc.
+ * Copyright (c) 2014 Etudes, Inc.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,52 +21,26 @@
  *
  **********************************************************************************/
 -->
-
 <project xmlns="http://maven.apache.org/POM/4.0.0">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<artifactId>etudes-util-base</artifactId>
-		<groupId>org.etudes</groupId>
-		<version>1.0.26</version>
-		<relativePath>../../pom.xml</relativePath>
+		<artifactId>base</artifactId>
+		<groupId>org.sakaiproject</groupId>
+		<version>11.4</version>
+		<relativePath>../pom.xml</relativePath>
 	</parent>
 
-	<name>etudes-util-util</name>
+	<name>lticontact-base</name>
 	<groupId>org.etudes</groupId>
-	<artifactId>etudes-util-util</artifactId>
+	<artifactId>lticontact-base</artifactId>
+	<version>1.3</version>
 
-	<packaging>jar</packaging>
+	<packaging>pom</packaging>
 
-	<dependencies>
-		<dependency>
-			<groupId>commons-logging</groupId>
-			<artifactId>commons-logging</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.sakaiproject.kernel</groupId>
-			<artifactId>sakai-kernel-util</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.sakaiproject.kernel</groupId>
-			<artifactId>sakai-kernel-api</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.sakaiproject.kernel</groupId>
-			<artifactId>sakai-component-manager</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.etudes</groupId>
-			<artifactId>etudes-util-api</artifactId>
-			<version>1.0.26</version>
-		</dependency>
-	</dependencies>
-
-	<build>	
-	</build>
-
+	<modules>
+		<module>lticontact-util</module>
+		<module>lticontact-webapp/webapp</module>
+	</modules>
+    
 </project>
