@@ -60,15 +60,15 @@
             <filter-class>edu.yale.its.tp.cas.client.filter.CASFilter</filter-class>
             <init-param>
                 <param-name>edu.yale.its.tp.cas.client.filter.loginUrl</param-name>
-                <param-value>https://casdev.unisa.ac.za/cas</param-value>
+                <param-value>https://cas.unisa.ac.za/cas</param-value>
             </init-param>
             <init-param>
                <param-name>edu.yale.its.tp.cas.client.filter.validateUrl</param-name>
-               <param-value>https://casdev.unisa.ac.za/serviceValidate</param-value>
+               <param-value>https://cas.unisa.ac.za/serviceValidate</param-value>
            </init-param>
            <init-param>
                <param-name>edu.yale.its.tp.cas.client.filter.serverName</param-name>
-               <param-value>my.unisa.ac.za</param-value>
+               <param-value>myexams.unisa.ac.za</param-value>
            </init-param>
            <init-param>
                <param-name>edu.yale.its.tp.cas.client.filter.wrapRequest</param-name>
