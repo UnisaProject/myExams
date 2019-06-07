@@ -69,12 +69,12 @@
  
         <init-param> 
             <param-name>casServerLoginUrl</param-name> 
-            <param-value>https://casdev.unisa.ac.za/cas/login</param-value> 
+            <param-value>https://cas.unisa.ac.za/cas/login</param-value> 
         </init-param> 
  
         <init-param> 
             <param-name>serverName</param-name> 
-            <param-value>my.unisa.ac.za</param-value> 
+            <param-value>myexams.unisa.ac.za</param-value> 
         </init-param> 
     </filter> 
  
@@ -84,12 +84,12 @@
  
         <init-param> 
             <param-name>casServerUrlPrefix</param-name> 
-            <param-value>https://casdev.unisa.ac.za</param-value> 
+            <param-value>https://cas.unisa.ac.za</param-value> 
         </init-param> 
  
         <init-param> 
             <param-name>serverName</param-name> 
-          <param-value>my.unisa.ac.za</param-value> 
+          <param-value>myexams.unisa.ac.za</param-value> 
         </init-param> 
     </filter> 
  
