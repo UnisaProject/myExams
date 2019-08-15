@@ -1,0 +1,9 @@
+.classpath
+.idea
+*.iml
+.project
+*.swp
+tags
+tarball
+yaft.tgz
+target
