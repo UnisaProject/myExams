@@ -71,6 +71,10 @@ public interface UserDirectoryService extends EntityProducer
 	/** User eid for the admin user. */
 	static final String ADMIN_EID = "admin";
 
+	/** Cache keys for the id/eid mapping **/
+	static final String EIDCACHE = "eid:";
+	static final String IDCACHE = "id:";
+
 	/**
 	 * This function returns a boolean value of true/false,
 	 * depending on if the given password meets the validation criteria.
