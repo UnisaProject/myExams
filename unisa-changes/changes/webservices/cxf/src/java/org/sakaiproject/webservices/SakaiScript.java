@@ -54,6 +54,7 @@ import org.sakaiproject.calendar.api.Calendar;
 import org.sakaiproject.calendar.api.CalendarEdit;
 import org.sakaiproject.calendar.api.CalendarEvent;
 import org.sakaiproject.calendar.api.CalendarEventEdit;
+import org.sakaiproject.calendar.api.RecurrenceRule;
 import org.sakaiproject.entity.api.EntityProducer;
 import org.sakaiproject.entity.api.EntityTransferrer;
 import org.sakaiproject.entity.api.EntityTransferrerRefMigrator;
