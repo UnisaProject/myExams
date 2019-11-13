@@ -118,6 +118,14 @@
                 <module>web</module>
                 <module>webjars</module>
                 <module>webservices</module>
+                 <!-- UNISA CHANGES -->
+				<module>clog</module> <!-- contrib tool -->
+    			<module>etudes-util</module> <!-- contrib tool -->
+				<module>ltiContact</module> 
+				<module>melete</module> <!-- contrib tool -->
+				<module>unisa-changes</module>	
+				<module>yaft</module> <!-- contrib tool -->
+				<!-- END OF UNISA CHANGES -->
             </modules>
         </profile>
         <profile>
