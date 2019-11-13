@@ -13,6 +13,5 @@
   <packaging>pom</packaging>
   <modules>
 	<module>overlays/gradebook</module>
-	<module>overlays/site-manage</module>
   </modules>
 </project>
