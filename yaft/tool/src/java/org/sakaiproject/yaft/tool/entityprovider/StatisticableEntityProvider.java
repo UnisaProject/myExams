@@ -31,15 +31,15 @@ public class StatisticableEntityProvider extends AbstractEntityProvider implemen
 	protected final Logger LOG = Logger.getLogger(getClass());
 	
 	public final static String ENTITY_PREFIX = "yaft-forum";
-	
+	//unisa-change: Changed the event names took out the _ss for the events
 	private static final String[] EVENT_KEYS
 		= new String[] {
-			YaftForumService.YAFT_FORUM_CREATED_SS,
-			YaftForumService.YAFT_FORUM_DELETED_SS,
-			YaftForumService.YAFT_DISCUSSION_CREATED_SS,
-			YaftForumService.YAFT_DISCUSSION_DELETED_SS,
-			YaftForumService.YAFT_MESSAGE_CREATED_SS,
-			YaftForumService.YAFT_MESSAGE_DELETED_SS
+			YaftForumService.YAFT_FORUM_CREATED,
+			YaftForumService.YAFT_FORUM_DELETED,
+			YaftForumService.YAFT_DISCUSSION_CREATED,
+			YaftForumService.YAFT_DISCUSSION_DELETED,
+			YaftForumService.YAFT_MESSAGE_CREATED,
+			YaftForumService.YAFT_MESSAGE_DELETED
 			};
 
 	public String getEntityPrefix()

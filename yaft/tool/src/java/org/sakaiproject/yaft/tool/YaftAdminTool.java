@@ -121,7 +121,7 @@ public class YaftAdminTool extends HttpServlet
 					{
 						Forum yaftForum = new Forum();
 						yaftForum.setSiteId(siteId);
-						yaftForum.title = forumRS.getString("TITLE");
+						yaftForum.setTitle(forumRS.getString("TITLE"));
 						yaftForum.setDescription(forumRS.getString("SHORT_DESCRIPTION"));
 						//yaftForum.setPlacementId(tc.getId());
 						yaftForumService.addOrUpdateForum(yaftForum);
@@ -142,7 +142,7 @@ public class YaftAdminTool extends HttpServlet
 								firstMessage.setCreatedDate(discussionRS.getTimestamp("CREATED").getTime());
 								org.sakaiproject.yaft.api.Discussion discussion = new org.sakaiproject.yaft.api.Discussion();
 								discussion.setFirstMessage(firstMessage);
-								yaftForumService.addDiscussion(sakaiProxy.getCurrentSiteId(), yaftForum.getId(), sakaiProxy.getCurrentUser().getId(), discussion, false);
+								yaftForumService.addDiscussion(sakaiProxy.getCurrentSiteId(), yaftForum.getId(), sakaiProxy.getUserIdFromSession(), discussion, false);
 								addChildMessages(conn,yaftForum.getId(),firstMessage.getId(),tc.getId(),firstMessage.getId(),discussionRS.getInt("ID"));
 							}
 						}
@@ -213,7 +213,7 @@ public class YaftAdminTool extends HttpServlet
 				
 				yaftMessage.setAttachments(attachments);
 				
-				yaftForumService.addOrUpdateMessage(null, forumId, sakaiProxy.getCurrentUser().getId(), yaftMessage, false);
+				yaftForumService.addOrUpdateMessage(null, forumId, sakaiProxy.getUserIdFromSession(), yaftMessage, false);
 				
 				addChildMessages(conn, forumId, discussionId,placementId, yaftMessage.getId(), rs.getInt("ID"));
 			}

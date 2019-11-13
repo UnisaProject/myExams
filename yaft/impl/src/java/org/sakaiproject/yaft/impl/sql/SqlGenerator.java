@@ -49,32 +49,40 @@ public interface SqlGenerator
 	String getMessageChildrenSelectStatement(String id);
 
 	String getDiscussionSelectStatement(String discussionId);
-
-	List<String> getDeleteForumStatements(String forumId);
-
-	List<String> getDeleteDiscussionStatements(String forumId,String discussionId);
-
-	List<String> getDeleteMessageStatements(Message message,String forumId,Connection conn);
+    
+	//unisa change: change to prepared statements
+	List<PreparedStatement> getDeleteForumStatements(String forumId,Connection conn) throws Exception;
 	
-	List<String> getUndeleteMessageStatements(Message message,String forumId);
+	//unisa change: change to prepared statements
+	List<PreparedStatement> getDeleteDiscussionStatements(String forumId,String discussionId,Connection conn) throws Exception;
+
+	//unisa change: change to prepared statementS
+	List<PreparedStatement> getDeleteMessageStatements(Message message,String forumId,Connection conn) throws Exception;
+	
+	//unisa change: change to prepared statements
+	List<PreparedStatement> getUndeleteMessageStatements(Message message,String forumId,Connection conn) throws Exception;
 	
 	public String getMessageAttachmentsSelectStatement(String messageId);
 
 	String getDeleteAttachmentStatement(String attachmentId, String messageId);
 
 	String getSelectForumContainingMessageStatement(String messageId);
-
-	List<String> getMarkMessageReadStatements(String userId, String messageId,String forumId,String discussionId,Connection conn) throws SQLException;
-
-	List<String> getMarkMessageUnReadStatements(String id, String messageId,String forumId,String discussionId);
 	
-	List<String> getMarkDiscussionReadStatements(String userId, String discussionId,String forumId,Connection conn) throws SQLException;
+	//unisa change: change to prepared statements
+	List<PreparedStatement> getMarkMessageReadStatements(String userId, String messageId,String forumId,String discussionId,Connection conn) throws SQLException;
+	
+	//unisa change: change to prepared statements
+	List<PreparedStatement> getMarkMessageUnReadStatements(String id, String messageId,String forumId,String discussionId,Connection conn) throws Exception;
+	
+	//unisa change: change to prepared statements
+	List<PreparedStatement> getMarkDiscussionReadStatements(String userId, String discussionId,String forumId,Connection conn) throws SQLException;
 	
 	public String getSelectMessageReadStatement(String userId, String messageId);
 
 	String getSelectReadMessageIds(String id, String discussionId);
 
-	List<String> getMoveDiscussionStatements(String discussionId, String currentForumId,String newForumId,Connection conn);
+	//unisa change: change to prepared statements
+	List<PreparedStatement> getMoveDiscussionStatements(String discussionId, String currentForumId,String newForumId,Connection conn) throws Exception;
 
 	String getShowMessageStatement(Message message);
 
@@ -88,7 +96,7 @@ public interface SqlGenerator
 
 	String getSelectForumIdForTitleStatement(String title,String siteId);
 
-	PreparedStatement getSetDiscussionDataStatement(Discussion discussion,Connection conn) throws Exception;
+	PreparedStatement getSetDiscussionDatesStatement(Discussion discussion,Connection conn) throws Exception;
 
 	String getSelectActiveDiscussionsStatement();
 
@@ -112,12 +120,9 @@ public interface SqlGenerator
 	List<PreparedStatement> getSetDiscussionGroupsStatements(Discussion discussion, Connection connection) throws Exception;
 
 	String getDiscussionGroupsSelectStatement(String discussionId);
-
-	String getForumGroupsByDiscussionSelectStatement(String discussionId);
 	
-	List<String> getClearDiscussionStatements(String forumId, String discussionId);
+	//unisa change: change to prepared statement
+	List<PreparedStatement> getClearDiscussionStatements(String forumId, String discussionId, Connection conn) throws Exception;
 
 	PreparedStatement getSelectSiteForaStatement(String siteId, Connection connection) throws Exception;
-
-	PreparedStatement getIsAnonymousDiscussionStatement(String discussionId, Connection connection) throws Exception;
 }

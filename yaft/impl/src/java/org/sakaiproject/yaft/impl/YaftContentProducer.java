@@ -38,7 +38,6 @@ import org.sakaiproject.yaft.api.YaftForumService;
 import org.apache.log4j.Logger;
 
 public class YaftContentProducer implements EntityContentProducer {
-
 	private YaftForumService forumService = null;
 
 	public void setForumService(YaftForumService forumService) {
@@ -60,12 +59,13 @@ public class YaftContentProducer implements EntityContentProducer {
 	private Logger logger = Logger.getLogger(YaftContentProducer.class);
 
 	public void init() {
-		searchService.registerFunction(YaftForumService.YAFT_MESSAGE_CREATED_SS);
-		searchService.registerFunction(YaftForumService.YAFT_MESSAGE_DELETED_SS);
-		searchService.registerFunction(YaftForumService.YAFT_DISCUSSION_CREATED_SS);
-		searchService.registerFunction(YaftForumService.YAFT_DISCUSSION_DELETED_SS);
-		searchService.registerFunction(YaftForumService.YAFT_FORUM_CREATED_SS);
-		searchService.registerFunction(YaftForumService.YAFT_FORUM_DELETED_SS);
+		//unisa-change: Changed event name:,Took out _ss because the events in sitestats not reading _ss
+		searchService.registerFunction(YaftForumService.YAFT_MESSAGE_CREATED);
+		searchService.registerFunction(YaftForumService.YAFT_MESSAGE_DELETED);
+		searchService.registerFunction(YaftForumService.YAFT_DISCUSSION_CREATED);
+		searchService.registerFunction(YaftForumService.YAFT_DISCUSSION_DELETED);
+		searchService.registerFunction(YaftForumService.YAFT_FORUM_CREATED);
+		searchService.registerFunction(YaftForumService.YAFT_FORUM_DELETED);
 		searchIndexBuilder.registerEntityContentProducer(this);
 	}
 
@@ -83,9 +83,9 @@ public class YaftContentProducer implements EntityContentProducer {
 			logger.debug("getAction()");
 
 		String eventName = event.getEvent();
-		if (YaftForumService.YAFT_MESSAGE_CREATED_SS.equals(eventName) || YaftForumService.YAFT_DISCUSSION_CREATED_SS.equals(eventName) || YaftForumService.YAFT_FORUM_CREATED_SS.equals(eventName)) {
+		if (YaftForumService.YAFT_MESSAGE_CREATED.equals(eventName) || YaftForumService.YAFT_DISCUSSION_CREATED.equals(eventName) || YaftForumService.YAFT_FORUM_CREATED.equals(eventName)) {
 			return SearchBuilderItem.ACTION_ADD;
-		} else if (YaftForumService.YAFT_MESSAGE_DELETED_SS.equals(eventName) || YaftForumService.YAFT_DISCUSSION_DELETED_SS.equals(eventName) || YaftForumService.YAFT_FORUM_DELETED_SS.equals(eventName)) {
+		} else if (YaftForumService.YAFT_MESSAGE_DELETED.equals(eventName) || YaftForumService.YAFT_DISCUSSION_DELETED.equals(eventName) || YaftForumService.YAFT_FORUM_DELETED.equals(eventName)) {
 			return SearchBuilderItem.ACTION_DELETE;
 		} else {
 			return SearchBuilderItem.ACTION_UNKNOWN;
@@ -174,7 +174,7 @@ public class YaftContentProducer implements EntityContentProducer {
 			} else {
 				StringBuilder sb = new StringBuilder();
 
-				SearchUtils.appendCleanString(forum.title, sb);
+				SearchUtils.appendCleanString(forum.getTitle(), sb);
 				return sb.toString();
 			}
 		}
@@ -278,7 +278,7 @@ public class YaftContentProducer implements EntityContentProducer {
 				logger.error("No forum for id: " + id + ". Returning an empty title ...");
 				return "";
 			} else
-				return forum.title;
+				return forum.getTitle();
 		}
 
 		return "Unrecognised";
@@ -352,7 +352,7 @@ public class YaftContentProducer implements EntityContentProducer {
 	public boolean matches(Event event) {
 		String eventName = event.getEvent();
 
-		if (YaftForumService.YAFT_MESSAGE_CREATED_SS.equals(eventName) || YaftForumService.YAFT_MESSAGE_DELETED_SS.equals(eventName) || YaftForumService.YAFT_DISCUSSION_CREATED_SS.equals(eventName) || YaftForumService.YAFT_DISCUSSION_DELETED_SS.equals(eventName) || YaftForumService.YAFT_FORUM_CREATED_SS.equals(eventName) || YaftForumService.YAFT_FORUM_DELETED_SS.equals(eventName))
+		if (YaftForumService.YAFT_MESSAGE_CREATED.equals(eventName) || YaftForumService.YAFT_MESSAGE_DELETED.equals(eventName) || YaftForumService.YAFT_DISCUSSION_CREATED.equals(eventName) || YaftForumService.YAFT_DISCUSSION_DELETED.equals(eventName) || YaftForumService.YAFT_FORUM_CREATED.equals(eventName) || YaftForumService.YAFT_FORUM_DELETED.equals(eventName))
 			return true;
 
 		return false;

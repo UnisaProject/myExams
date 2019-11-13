@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.sakaiproject.api.app.profile.Profile;
 import org.sakaiproject.authz.api.SecurityAdvisor;
 import org.sakaiproject.entity.api.EntityProducer;
 import org.sakaiproject.search.api.SearchResult;
@@ -55,6 +56,8 @@ public interface SakaiProxy
 
 	public String getSakaiHomePath();
 
+	public Profile getProfile(String userId);
+
 	public void registerFunction(String yaftForumCreate);
 	
 	public boolean addCalendarEntry(String title,String description, String type, long startDate,long endDate);
@@ -62,6 +65,8 @@ public interface SakaiProxy
 	public boolean removeCalendarEntry(String title,String description);
 
 	public User getCurrentUser();
+	//unisa change 
+	public String getUserIdFromSession();
 
 	public String getPortalUrl();
 	
@@ -83,6 +88,8 @@ public interface SakaiProxy
 
 	public void deleteFile(String resourceId) throws Exception;
 
+	public String getUserBio(String id);
+
 	public List<Site> getAllSites();
 
 	public ToolConfiguration getFirstInstanceOfTool(String siteId, String string);
@@ -91,7 +98,9 @@ public interface SakaiProxy
 	
 	public void registerEntityProducer(EntityProducer entityProducer);
 	
-	public void postEvent(String event, String reference);
+	public boolean userHasFunctionInCurrentSite(String userId, String function);
+	
+	public void postEvent(String event,String reference,boolean modify);
 
 	public Site getSite(String siteId);
 
@@ -111,9 +120,7 @@ public interface SakaiProxy
 
 	public List<Group> getCurrentSiteGroups();
 
-	public boolean currentUserHasFunctionInCurrentSite(String function);
-
-	public boolean userHasFunctionInCurrentSite(String userId, String function);
+	public boolean currentUserHasFunction(String function);
 	
 	public boolean scoreAssignment(int assignmentId, String studentId,String score);
 
