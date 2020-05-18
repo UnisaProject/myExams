@@ -337,8 +337,9 @@ $banner-height: 64px !default;
 
 /* Logo location */
 $logo: 'images/unisa_logo.png' !default;
-$logo-height: 64px !default;
-$logo-width: 280px !default;
+/* vijay change: logo size changed to view Login button in mobile view from 64px,280px to 50px,180px */
+$logo-height: 50px !default;
+$logo-width: 180px !default;
 
 /* Tool icons */
 $skin-with-icons: true !default;
