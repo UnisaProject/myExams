@@ -97,7 +97,8 @@ public class ExampaperdownloadController {
 					
 					String oldFilePath = "/data/sakai/content/"+filePath;
 					String newFilePath = "/data/ExamPaperImport/myEXAMs/"+module+"/"+module+"_"+STUDENTNR+"_80."+fileExtension;
-					String fileName = module+"_"+STUDENTNR+"_80."+fileExtension;
+					// file format: Studno(8) _ module(7) _ 80.???
+					String fileName = STUDENTNR+"_"+module+"_80."+fileExtension;
 					//System.out.println("SY EXAM PAPERS OldfilePath: "+oldFilePath);
 					//System.out.println("SY EXAM PAPERS newFilePath: "+newFilePath);
 
