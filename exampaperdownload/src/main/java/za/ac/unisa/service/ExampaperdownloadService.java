@@ -29,8 +29,8 @@ public class ExampaperdownloadService {
 		return this.exampaperdownloadDAO.getExamPaper(siteId,examTitle );
 	}
 	
-	public void insertExamPaperLog(String module, String stno, String oldPath, String newPath, Boolean success) {
-		this.exampaperdownloadDAO.insertExamPaperLog(module, stno, oldPath, newPath, success );
+	public void insertExamPaperLog(String module, String stno, String oldPath, String newPath, Boolean success, String error) {
+		this.exampaperdownloadDAO.insertExamPaperLog(module, stno, oldPath, newPath, success, error );
 	}	
 	
 }
