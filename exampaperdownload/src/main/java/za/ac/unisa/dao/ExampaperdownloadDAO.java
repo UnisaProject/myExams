@@ -148,7 +148,7 @@ copy_date date,
 success boolean*/
 		
 		String queryString = "INSERT INTO EXAMPAPER_DOWNLOAD_LOG "+
-							" VALUES ("+module+", "+stno+", "+oldPath+", "+newPath+", now(), "+success+")";
+							" VALUES ('"+module+"', '"+stno+"', '"+oldPath+"', '"+newPath+"', now(), "+success+")";
 		System.out.println("queryString INSERTEXAMPAPERLOG: "+queryString);
 		
 		SQLQuery sqlQuery = this.getSessionFactory().getCurrentSession().createSQLQuery(queryString);
