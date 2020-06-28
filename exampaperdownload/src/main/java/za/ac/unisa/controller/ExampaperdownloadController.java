@@ -50,7 +50,6 @@ public class ExampaperdownloadController {
 	public String test(@RequestParam(name = "siteId") String siteId,
 			@RequestParam(name = "examTitle") String examTitle) {
 
-		System.out.println("in list ");
 
 		return "test";
 	}
@@ -64,14 +63,12 @@ public class ExampaperdownloadController {
 		if (exampaperList.size() > 0) {
 
 			Iterator recordsGI_it = exampaperList.iterator();
-			System.out.println("in list " + exampaperList.size());
 			while (recordsGI_it.hasNext()) {
 			
 				ExamPaper examPaper=(ExamPaper)recordsGI_it.next();				 
 				String assignmentId = examPaper.getAssignmentid();
 				System.out.println("assignmentId " + assignmentId);
 				String module = examPaper.getModule();
-				System.out.println("module " + module);
 				int successCount = 0;
 				int failCount = 0;
 				String successPapers = "Papers copied successfully: \n";
@@ -96,24 +93,32 @@ public class ExampaperdownloadController {
 					String fileExtension = bits[bits.length-1];
 					
 					String oldFilePath = "/data/sakai/content/"+filePath;
-					String newFilePath = "/data/ExamPaperImport/myEXAMs/"+module+"/"+module+"_"+STUDENTNR+"_80."+fileExtension;
+					String newFilePath = "/data/ExamPaperImport/myExams/"+module+"/"+STUDENTNR+"_"+module+"_80."+fileExtension;
 					// file format: Studno(8) _ module(7) _ 80.???
 					String fileName = STUDENTNR+"_"+module+"_80."+fileExtension;
-					//System.out.println("SY EXAM PAPERS OldfilePath: "+oldFilePath);
-					//System.out.println("SY EXAM PAPERS newFilePath: "+newFilePath);
 
 					File source = new File(oldFilePath);  
 			        File destinationFile = new File(newFilePath); 
 			        try {
 			        	copy(source, destinationFile);
 			        	//System.out.println("***** FILE COPIED SUCCESSFULLY ");
+						exampaperdownloadService.insertExamPaperLog(module, STUDENTNR, oldFilePath, newFilePath, true);
 						successCount++;
 						successPapers = successPapers+fileName+" ("+oldFilePath+") \n";
 					} catch (IOException e) { // Files.copy(source, dest);;
 						e.printStackTrace();
 						System.out.println("***** SY EXAMPAPERDOWNLOAD: error "+e);
+						exampaperdownloadService.insertExamPaperLog(module, STUDENTNR, oldFilePath, newFilePath, false);
 						failCount++;
 						failPapers = failPapers+module+fileName+" ("+oldFilePath+") "+ e +"\n";
+						try {
+                            String heading = "MyExams: ERROR Exam paper Copy Module: "+module+" ("+assignmentId+")";
+                            String body = module+"=="+STUDENTNR+" error "+e;
+                            sendEmail(heading, body, "syzelle@unisa.ac.za");
+                        } catch (AddressException e1) {
+                        	// TODO Auto-generated catch block
+                        	e1.printStackTrace();
+                                		}
 					} // end try
 			       
 									
@@ -178,7 +183,8 @@ public class ExampaperdownloadController {
 		
 		//Get the session object  
       Properties properties = System.getProperties();  
-      properties.setProperty("mail.smtp.host", "lazu-pstfx01pv.int.unisa.ac.za");  
+      //properties.setProperty("mail.smtp.host", "lazu-pstfx01pv.int.unisa.ac.za");  
+	  properties.setProperty("mail.smtp.host", "smtp.sendgrid.net");  
       Session session = Session.getDefaultInstance(properties); 
 	  
 	  //compose the message  
