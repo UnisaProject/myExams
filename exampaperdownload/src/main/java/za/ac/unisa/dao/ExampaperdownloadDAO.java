@@ -136,4 +136,26 @@ public class ExampaperdownloadDAO {
 
 		return list;
 	}
+
+	public void insertExamPaperLog(String module, String stno, String oldPath, String newPath, Boolean success) {
+		
+		/*CREATE TABLE exampaper_download
+( module VARCHAR(7) NOT NULL,
+studentnr VARCHAR(10),
+copy_from VARCHAR(100),
+copy_to varchar(100),
+copy_date date,
+success boolean*/
+		
+		String queryString = "INSERT INTO EXAMPAPER_DOWNLOAD_LOG "+
+							" VALUES ("+module+", "+stno+", "+oldPath+", "+newPath+", now(), "+success+")";
+		System.out.println("queryString INSERTEXAMPAPERLOG: "+queryString);
+		
+		SQLQuery sqlQuery = this.getSessionFactory().getCurrentSession().createSQLQuery(queryString);
+		
+		sqlQuery.executeUpdate();
+		
+	}
+
+
 }
