@@ -110,8 +110,6 @@ public class ExampaperdownloadController {
 						successCount++;
 						successPapers = successPapers+fileName+" ("+oldFilePath+") \n";
 					} catch (IOException e) { // Files.copy(source, dest);;
-						e.printStackTrace();
-						System.out.println("***** SY EXAMPAPERDOWNLOAD: error "+e);
 						String error = e.toString();
 						error = error.substring(1,200);
 						exampaperdownloadService.insertExamPaperLog(module, STUDENTNR, oldFilePath, newFilePath, false, error);
@@ -127,7 +125,10 @@ public class ExampaperdownloadController {
                         	// TODO Auto-generated catch block
                         	e1.printStackTrace();
                                 		}
-					} // end try
+						System.out.println("***** SY EXAMPAPERDOWNLOAD: error "+e);
+						e.printStackTrace();
+						
+					} // end try */
 					/*catch (FileNotFoundException e2) { // Files.copy(source, dest);;
 						e2.printStackTrace();
 						System.out.println("***** SY EXAMPAPERDOWNLOAD: error "+e2);
@@ -175,8 +176,9 @@ public class ExampaperdownloadController {
 		return "success";
 	}
 	
-	public String copy ( File source,  File target)  
-	         throws FileNotFoundException, IOException {  
+	//throws FileNotFoundException, IOException
+	public String copy ( File source,  File target) 
+			throws IOException {  
 	        FileChannel sourceChannel = null;  
 	        FileChannel targetChannel = null;  
 	        try {  
@@ -192,18 +194,11 @@ public class ExampaperdownloadController {
 	                targetChannel.write(buffer);
 	                buffer.compact();
 	            }
-	        /*} catch(Exception e) {    
+				//System.err.format("I/O Error when copying file");
+	        } catch(IOException e) {    
 				String error = e.toString();
 				error = error.substring(1,200);
 				return error;
-			} catch(IOException e1) {    
-				String error = e1.toString();
-				error = error.substring(1,200);
-				return error;
-			} catch(FileNotFoundException e2) {    
-				String error = e2.toString();
-				error = error.substring(1,200);
-				return error;*/
 	        }  finally {  
 		        if (targetChannel != null) {
 		        	targetChannel.close();  
