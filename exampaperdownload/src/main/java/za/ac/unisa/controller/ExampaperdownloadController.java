@@ -107,7 +107,7 @@ public class ExampaperdownloadController {
 						successPapers = successPapers+fileName+" ("+oldFilePath+") \n";
 					} catch (IOException e) { // Files.copy(source, dest);;
 						String error = e.toString();
-						error = error.substring(1,200);
+						error = error.substring(1,100);
 						exampaperdownloadService.insertExamPaperLog(module, STUDENTNR, oldFilePath, newFilePath, false, error);
 						
 						
@@ -194,7 +194,7 @@ public class ExampaperdownloadController {
 	        } catch(IOException e) {    
 				System.err.format("EXAMPAPERDOWNLOAD I/O Error when copying file");
 				String error = e.toString();
-				error = error.substring(1,200);
+				//error = error.substring(1,200);
 				//return error;
 	        }  finally {  
 		        if (targetChannel != null) {

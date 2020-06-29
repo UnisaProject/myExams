@@ -25,6 +25,7 @@
 		<beans:property name="password" value="i34{{33W" />
 	</beans:bean>  -->
 	
+	<!-- myExams Dev database -->
 	<beans:bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<beans:property name="driverClassName" value="com.mysql.jdbc.Driver" />
@@ -33,9 +34,19 @@
 		<beans:property name="password" value="devexam123#" />
 	</beans:bean>
 	
-	<beans:bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+	<!-- myExams prod database -->
+	<!--beans:bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<beans:property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<beans:property name="url" value="jdbc:mysql://lazu-oemysql02pv.mysql.database.azure.com:3306/p_onlineexam?useSSL=true" />
+		<beans:property name="username" value="pexam@lazu-oemysql02pv" />
+		<beans:property name="password" value="Pexam123#" />
+	</beans:bean-->
+
+	
+	<!--beans:bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
     	<beans:property name="jndiName" value="java:comp/env/jdbc/DatabaseName"/>
-	</beans:bean>
+	</beans:bean-->
 
 	<beans:bean id="sessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
