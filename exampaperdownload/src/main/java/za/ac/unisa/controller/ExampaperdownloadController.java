@@ -100,13 +100,9 @@ public class ExampaperdownloadController {
 					File source = new File(oldFilePath);  
 			        File destinationFile = new File(newFilePath); 
 			        try {
-			        	String success = copy(source, destinationFile);
+			        	copy(source, destinationFile);
 			        	//System.out.println("***** FILE COPIED SUCCESSFULLY ");
-						if (success.equals("success")) {
 							exampaperdownloadService.insertExamPaperLog(module, STUDENTNR, oldFilePath, newFilePath, true, "");
-						} else {
-							exampaperdownloadService.insertExamPaperLog(module, STUDENTNR, oldFilePath, newFilePath, false, "");
-						}
 						successCount++;
 						successPapers = successPapers+fileName+" ("+oldFilePath+") \n";
 					} catch (IOException e) { // Files.copy(source, dest);;
@@ -177,7 +173,7 @@ public class ExampaperdownloadController {
 	}
 	
 	//throws FileNotFoundException, IOException
-	public String copy ( File source,  File target) 
+	public void copy ( File source,  File target) 
 			throws IOException {  
 	        FileChannel sourceChannel = null;  
 	        FileChannel targetChannel = null;  
@@ -194,11 +190,12 @@ public class ExampaperdownloadController {
 	                targetChannel.write(buffer);
 	                buffer.compact();
 	            }
-				//System.err.format("I/O Error when copying file");
+				
 	        } catch(IOException e) {    
+				System.err.format("EXAMPAPERDOWNLOAD I/O Error when copying file");
 				String error = e.toString();
 				error = error.substring(1,200);
-				return error;
+				//return error;
 	        }  finally {  
 		        if (targetChannel != null) {
 		        	targetChannel.close();  
@@ -206,7 +203,7 @@ public class ExampaperdownloadController {
 		        if (targetChannel != null) {
 		        	sourceChannel.close();
 		        }
-				return "success";
+				//return "success";
 	        }   //finally
 	}// end  public static void copy ( File source,  File target)  
 	
