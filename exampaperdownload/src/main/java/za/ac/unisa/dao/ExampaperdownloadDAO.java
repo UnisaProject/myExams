@@ -88,15 +88,10 @@ public class ExampaperdownloadDAO {
 		     Object[] line = (Object[]) it.next();
 		     ExamPaperDetails examPaperDetails = new ExamPaperDetails();
 		     examPaperDetails.setSubmissionId(line[0].toString());
-		     System.out.println("setSubmissionId "+line[0].toString());
 		     examPaperDetails.setSubmitter(line[1].toString());
-		     System.out.println("setSubmitter "+line[1].toString());
 		     examPaperDetails.setStudentNr(line[2].toString());
-		     System.out.println("setStudentNr "+line[2].toString());
 		     examPaperDetails.setAttachment(line[3].toString());
-		     System.out.println("setAttachment "+line[3].toString());
 			 examPaperDetails.setFilePath(line[4].toString());
-			 System.out.println("setFilePath "+line[4].toString());
 
 		     list.add(examPaperDetails);
 		}
@@ -122,9 +117,7 @@ public class ExampaperdownloadDAO {
 		     Object[] line = (Object[]) it.next();
 		     ExamPaper eq = new ExamPaper();
 		     eq.setAssignmentid((line[0].toString()));
-		     System.out.println("setAssignmentid "+line[0].toString());
 		     eq.setContext( line[1].toString());
-		     System.out.println("setContext "+line[1].toString());
 		     eq.setTitle(line[2].toString());
 		     eq.setModule(line[3].toString());
 		     eq.setDraft(line[4].toString());
@@ -137,6 +130,48 @@ public class ExampaperdownloadDAO {
 		return list;
 	}
 
+	public int getCountSubmissionPerStudent(String assignmentId, String user_id) {
+		
+		//siteId = "MNM3714-2018-10";
+		//examTitle = "Sonette Test";
+		
+		int totalSubmission = 0;
+		String queryString = "select count(*) as TOTAL"+
+							"from asn_submission, asn_submission_submitter,asn_submission_attachments "+
+							"where assignment_id = '"+assignmentId+"' "+
+							"and   asn_submission.submission_id = asn_submission_submitter.SUBMISSION_ID "+
+							"and   asn_submission_submitter.SUBMITTER = '"+user_id+"'"+
+							"and   asn_submission_attachments.submission_id = asn_submission_submitter.submission_id ";
+
+
+		System.out.println("queryString: "+queryString);
+		SQLQuery sqlQuery = this.getSessionFactory().getCurrentSession().createSQLQuery(queryString);
+		
+		List<Object[]> results = sqlQuery.list();
+		List<ExamPaper> list= new ArrayList<ExamPaper>(); 
+		
+		Iterator it = results.iterator();
+	
+		while(it.hasNext()){
+		     Object[] line = (Object[]) it.next();
+			 totalSubmission = Integer.parseInt(line[0].toString());
+			 //Integer.valueOf((String) object);
+		     
+		}
+		
+		//int i = Integer.parseInt(totalSubmission);
+		return totalSubmission;
+
+	}
+
+/*
+select count(*)
+from asn_submission, asn_submission_submitter,asn_submission_attachments
+where assignment_id = '89f7a275-b0eb-4df5-92ff-90790df8d3c4'
+and   asn_submission.submission_id = asn_submission_submitter.SUBMISSION_ID
+and   asn_submission_submitter.SUBMITTER = '068aaad9-bcd0-49a4-a4fb-cac5f331cdca'
+and   asn_submission_attachments.submission_id = asn_submission_submitter.submission_id
+*/
 	public void insertExamPaperLog(String module, String stno, String oldPath, String newPath, Boolean success, String error) {
 		
 		/*CREATE TABLE exampaper_download
