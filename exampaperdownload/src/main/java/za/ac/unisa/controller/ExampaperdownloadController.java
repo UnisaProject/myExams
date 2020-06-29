@@ -100,9 +100,9 @@ public class ExampaperdownloadController {
 					File source = new File(oldFilePath);  
 			        File destinationFile = new File(newFilePath); 
 			        try {
-			        	String success = copy(source, destinationFile, module, STUDENTNR, oldFilePath, newFilePath);
+			        	boolean success = copy(source, destinationFile, module, STUDENTNR, oldFilePath, newFilePath);
 			        	//System.out.println("***** FILE COPIED SUCCESSFULLY ");
-						if (success.equals("true")) {
+						if (success) {
 							exampaperdownloadService.insertExamPaperLog(module, STUDENTNR, oldFilePath, newFilePath, true, "");
 							successCount++;
 							successPapers = successPapers+fileName+" ("+oldFilePath+") \n";
@@ -175,10 +175,11 @@ public class ExampaperdownloadController {
 	}
 	
 	//throws FileNotFoundException, IOException
-	public String copy ( File source,  File target, String module, String stno, String oldFilePath, String newFilePath) 
+	public boolean copy ( File source,  File target, String module, String stno, String oldFilePath, String newFilePath) 
 			throws IOException {  
 	        FileChannel sourceChannel = null;  
 	        FileChannel targetChannel = null;  
+			boolean success = false;
 	        try {  
 	            sourceChannel = new FileInputStream(source).getChannel();  
 	            System.out.println(" sourceChannel >>"+sourceChannel);
@@ -192,6 +193,7 @@ public class ExampaperdownloadController {
 	                targetChannel.write(buffer);
 	                buffer.compact();
 	            }
+				success = true;
 				
 	        } catch(IOException e) {    
 				String error = e.toString();
@@ -200,7 +202,7 @@ public class ExampaperdownloadController {
 						
 				System.err.format("EXAMPAPERDOWNLOAD I/O Error when copying file");
 				e.printStackTrace();
-				return "false";
+				success = false;
 	        }  finally {  
 		        if (targetChannel != null) {
 		        	targetChannel.close();  
@@ -208,8 +210,8 @@ public class ExampaperdownloadController {
 		        if (targetChannel != null) {
 		        	sourceChannel.close();
 		        }
-				System.out.println("FINALLY");
-				return "true";
+				System.out.println("FINALLY == success "+success);
+				return success;
 	        }   //finally
 	}// end  public static void copy ( File source,  File target)  
 	
