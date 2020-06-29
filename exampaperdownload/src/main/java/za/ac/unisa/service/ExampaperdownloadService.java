@@ -1,6 +1,7 @@
 package za.ac.unisa.service;
 
 import java.util.List;
+import java.math.BigInteger; 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,7 +34,7 @@ public class ExampaperdownloadService {
 		this.exampaperdownloadDAO.insertExamPaperLog(module, stno, oldPath, newPath, success, error );
 	}	
 	
-	public int getCountSubmissionPerStudent(String assignmentId, String userId) {
+	public Integer getCountSubmissionPerStudent(String assignmentId, String userId) {
 		return this.exampaperdownloadDAO.getCountSubmissionPerStudent(assignmentId, userId );
 	}
 }

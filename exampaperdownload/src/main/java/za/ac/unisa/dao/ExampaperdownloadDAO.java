@@ -3,6 +3,7 @@ package za.ac.unisa.dao;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.math.BigInteger; 
 
 import org.hibernate.Criteria;
 import org.hibernate.SQLQuery;
@@ -130,12 +131,12 @@ public class ExampaperdownloadDAO {
 		return list;
 	}
 
-	public int getCountSubmissionPerStudent(String assignmentId, String user_id) {
+	public Integer getCountSubmissionPerStudent(String assignmentId, String user_id) {
 		
 		//siteId = "MNM3714-2018-10";
 		//examTitle = "Sonette Test";
 		
-		int totalSubmission = 0;
+		Integer totalSubmission = 0;
 		String queryString = "select count(*) as TOTAL"+
 							"from asn_submission, asn_submission_submitter,asn_submission_attachments "+
 							"where assignment_id = '"+assignmentId+"' "+
@@ -154,9 +155,10 @@ public class ExampaperdownloadDAO {
 	
 		while(it.hasNext()){
 		     Object[] line = (Object[]) it.next();
-			 totalSubmission = Integer.parseInt(line[0].toString());
+			 //String totalSubmission = Integer.parseInt(line[0].toString());
+			 //String totalSubmission = line[0].toString();
 			 //Integer.valueOf((String) object);
-		     
+		     totalSubmission = ((BigInteger) line[0]).intValue();
 		}
 		
 		//int i = Integer.parseInt(totalSubmission);

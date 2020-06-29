@@ -3,6 +3,7 @@ package za.ac.unisa.controller;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
+import java.math.BigInteger; 
 
 
 import org.apache.commons.collections4.map.ListOrderedMap;
@@ -102,7 +103,7 @@ public class ExampaperdownloadController {
 			        File destinationFile = new File(newFilePath); 
 					
 					// check if student has multiple submissions then do not download
-					int numberOfSubmissions = exampaperdownloadService.getCountSubmissionPerStudent(assignmentId, submitter );
+					Integer numberOfSubmissions = exampaperdownloadService.getCountSubmissionPerStudent(assignmentId, submitter );
 					if (numberOfSubmissions >= 2) {
 						exampaperdownloadService.insertExamPaperLog(module, STUDENTNR, oldFilePath, "", false, "multiple uploads found for student ="+numberOfSubmissions);
 					} 
