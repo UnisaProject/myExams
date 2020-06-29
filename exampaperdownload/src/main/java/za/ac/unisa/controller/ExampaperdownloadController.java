@@ -100,11 +100,13 @@ public class ExampaperdownloadController {
 					File source = new File(oldFilePath);  
 			        File destinationFile = new File(newFilePath); 
 			        try {
-			        	copy(source, destinationFile, module, STUDENTNR, oldFilePath, newFilePath);
+			        	String success = copy(source, destinationFile, module, STUDENTNR, oldFilePath, newFilePath);
 			        	//System.out.println("***** FILE COPIED SUCCESSFULLY ");
+						if (success.equals("true")) {
 							exampaperdownloadService.insertExamPaperLog(module, STUDENTNR, oldFilePath, newFilePath, true, "");
-						successCount++;
-						successPapers = successPapers+fileName+" ("+oldFilePath+") \n";
+							successCount++;
+							successPapers = successPapers+fileName+" ("+oldFilePath+") \n";
+						}
 					} catch (IOException e) { // Files.copy(source, dest);;
 						/*String error = e.toString();
 						error = error.substring(1,100);
@@ -173,7 +175,7 @@ public class ExampaperdownloadController {
 	}
 	
 	//throws FileNotFoundException, IOException
-	public void copy ( File source,  File target, String module, String stno, String oldFilePath, String newFilePath) 
+	public String copy ( File source,  File target, String module, String stno, String oldFilePath, String newFilePath) 
 			throws IOException {  
 	        FileChannel sourceChannel = null;  
 	        FileChannel targetChannel = null;  
@@ -198,8 +200,7 @@ public class ExampaperdownloadController {
 						
 				System.err.format("EXAMPAPERDOWNLOAD I/O Error when copying file");
 				e.printStackTrace();
-				//error = error.substring(1,200);
-				//return error;
+				return "false";
 	        }  finally {  
 		        if (targetChannel != null) {
 		        	targetChannel.close();  
@@ -207,7 +208,8 @@ public class ExampaperdownloadController {
 		        if (targetChannel != null) {
 		        	sourceChannel.close();
 		        }
-				//return "success";
+				System.out.println("FINALLY");
+				return "true";
 	        }   //finally
 	}// end  public static void copy ( File source,  File target)  
 	
