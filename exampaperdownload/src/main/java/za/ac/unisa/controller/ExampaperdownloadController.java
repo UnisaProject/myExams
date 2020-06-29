@@ -106,10 +106,10 @@ public class ExampaperdownloadController {
 						successCount++;
 						successPapers = successPapers+fileName+" ("+oldFilePath+") \n";
 					} catch (IOException e) { // Files.copy(source, dest);;
-						String error = e.toString();
+						/*String error = e.toString();
 						error = error.substring(1,100);
-						exampaperdownloadService.insertExamPaperLog(module, STUDENTNR, oldFilePath, newFilePath, false, error);
-						
+						exampaperdownloadService.insertExamPaperLog(module, STUDENTNR, oldFilePath, newFilePath, false, error);*/
+						e.printStackTrace();
 						
 						failCount++;
 						failPapers = failPapers+module+fileName+" ("+oldFilePath+") "+ e +"\n";
@@ -192,8 +192,12 @@ public class ExampaperdownloadController {
 	            }
 				
 	        } catch(IOException e) {    
-				System.err.format("EXAMPAPERDOWNLOAD I/O Error when copying file");
 				String error = e.toString();
+				error = error.substring(1,100);
+				exampaperdownloadService.insertExamPaperLog(module, STUDENTNR, oldFilePath, newFilePath, false, error);
+						
+				System.err.format("EXAMPAPERDOWNLOAD I/O Error when copying file");
+				e.printStackTrace();
 				//error = error.substring(1,200);
 				//return error;
 	        }  finally {  
