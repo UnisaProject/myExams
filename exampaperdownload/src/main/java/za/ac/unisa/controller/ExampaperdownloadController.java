@@ -94,58 +94,49 @@ public class ExampaperdownloadController {
 					
 					String oldFilePath = "/data/sakai/content/"+filePath;
 					String newFilePath = "/data/ExamPaperImport/myExams/"+module+"/"+STUDENTNR+"_"+module+"_80."+fileExtension;
+					String createPath = "/data/ExamPaperImport/myExams/"+module;
 					// file format: Studno(8) _ module(7) _ 80.???
 					String fileName = STUDENTNR+"_"+module+"_80."+fileExtension;
 
 					File source = new File(oldFilePath);  
 			        File destinationFile = new File(newFilePath); 
-			        try {
-			        	boolean success = copy(source, destinationFile, module, STUDENTNR, oldFilePath, newFilePath);
-			        	//System.out.println("***** FILE COPIED SUCCESSFULLY ");
-						if (success) {
-							exampaperdownloadService.insertExamPaperLog(module, STUDENTNR, oldFilePath, newFilePath, true, "");
-							successCount++;
-							successPapers = successPapers+fileName+" ("+oldFilePath+") \n";
-						}
-					} catch (IOException e) { // Files.copy(source, dest);;
-						/*String error = e.toString();
-						error = error.substring(1,100);
-						exampaperdownloadService.insertExamPaperLog(module, STUDENTNR, oldFilePath, newFilePath, false, error);*/
-						e.printStackTrace();
-						
-						failCount++;
-						failPapers = failPapers+module+fileName+" ("+oldFilePath+") "+ e +"\n";
+					
+					// check if student has multiple submissions then do not download
+					int numberOfSubmissions = exampaperdownloadService.getCountSubmissionPerStudent(assignmentId, submitter );
+					if (numberOfSubmissions >= 2) {
+						exampaperdownloadService.insertExamPaperLog(module, STUDENTNR, oldFilePath, "", false, "multiple uploads found for student ="+numberOfSubmissions);
+					} 
+					
+					if (numberOfSubmissions == 1) {
 						try {
-                            String heading = "MyExams: ERROR Exam paper Copy Module: "+module+" ("+assignmentId+")";
-                            String body = module+"=="+STUDENTNR+" error "+e;
-                            sendEmail(heading, body, "syzelle@unisa.ac.za");
-                        } catch (AddressException e1) {
-                        	// TODO Auto-generated catch block
-                        	e1.printStackTrace();
-                                		}
-						System.out.println("***** SY EXAMPAPERDOWNLOAD: error "+e);
-						e.printStackTrace();
-						
-					} // end try */
-					/*catch (FileNotFoundException e2) { // Files.copy(source, dest);;
-						e2.printStackTrace();
-						System.out.println("***** SY EXAMPAPERDOWNLOAD: error "+e2);
-						String error = e2.toString();
-						error = error.substring(1,200);
-						exampaperdownloadService.insertExamPaperLog(module, STUDENTNR, oldFilePath, newFilePath, false, error);
-						failCount++;
-						failPapers = failPapers+module+fileName+" ("+oldFilePath+") "+ e2 +"\n";
-						try {
-                            String heading = "MyExams: ERROR Exam paper Copy Module: "+module+" ("+assignmentId+")";
-                            String body = module+"=="+STUDENTNR+" error "+e2;
-                            sendEmail(heading, body, "syzelle@unisa.ac.za");
-                        } catch (AddressException e3) {
-                        	// TODO Auto-generated catch block
-                        	e3.printStackTrace();
-                        }
-					}*/
-			       
-									
+							boolean success = copy(source, destinationFile, createPath, module, STUDENTNR, oldFilePath, newFilePath);
+							//System.out.println("***** FILE COPIED SUCCESSFULLY ");
+							if (success) {
+								exampaperdownloadService.insertExamPaperLog(module, STUDENTNR, oldFilePath, newFilePath, true, "");
+								successCount++;
+								successPapers = successPapers+fileName+" ("+oldFilePath+") \n";
+							}
+						} catch (IOException e) { // Files.copy(source, dest);;
+							/*String error = e.toString();
+							error = error.substring(1,100);
+							exampaperdownloadService.insertExamPaperLog(module, STUDENTNR, oldFilePath, newFilePath, false, error);*/
+							e.printStackTrace();
+							
+							failCount++;
+							failPapers = failPapers+module+fileName+" ("+oldFilePath+") "+ e +"\n";
+							try {
+								String heading = "MyExams: ERROR Exam paper Copy Module: "+module+" ("+assignmentId+")";
+								String body = module+"=="+STUDENTNR+" error "+e;
+								sendEmail(heading, body, "syzelle@unisa.ac.za");
+							} catch (AddressException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+											}
+							System.out.println("***** SY EXAMPAPERDOWNLOAD: error "+e);
+							e.printStackTrace();
+							
+						} // end try */		       
+					} // end of if numberOfSubmissions == 1				
 				} // while (recordsExamPapersIterator.hasNext()) {
 				
 				try {
@@ -175,13 +166,18 @@ public class ExampaperdownloadController {
 	}
 	
 	//throws FileNotFoundException, IOException
-	public boolean copy ( File source,  File target, String module, String stno, String oldFilePath, String newFilePath) 
+	public boolean copy ( File source,  File target, String createPath, String module, String stno, String oldFilePath, String newFilePath) 
 			throws IOException {  
 	        FileChannel sourceChannel = null;  
 	        FileChannel targetChannel = null;  
 			boolean success = false;
 	        try {  
-	            sourceChannel = new FileInputStream(source).getChannel();  
+				// make directory
+				File file = new File(createPath);
+				boolean dirCreated = file.mkdir();
+				System.out.println("EXAMPAPERDOWNLOAD dirCreated ="+dirCreated);
+	            
+				sourceChannel = new FileInputStream(source).getChannel();  
 	            System.out.println(" sourceChannel >>"+sourceChannel);
 	            targetChannel = new FileOutputStream(target).getChannel();
 	            System.out.println(" targetChannel >>"+targetChannel);
