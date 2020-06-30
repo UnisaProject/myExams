@@ -79,7 +79,7 @@ public class ExampaperdownloadDAO {
 				+ " and   asn_submission_submitter.SUBMITTER = sakai_user_id_map.user_id"
 				+ " and   asn_submission_attachments.submission_id = asn_submission_submitter.submission_id"
 				+ " and   asn_submission_attachments.attachment = CONCAT('/content',content_resource.resource_id)"
-				+ " STNUMBER, asn_submission.submitted_date";
+				+ " order by STUDENTNR, asn_submission.submitted_date";
 
 		SQLQuery sqlQuery = this.getSessionFactory().getCurrentSession().createSQLQuery(queryString);
 		List<Object[]> results = sqlQuery.list();
@@ -145,30 +145,7 @@ public class ExampaperdownloadDAO {
         System.out.println("queryString: "+queryString);
         SQLQuery sqlQuery = this.getSessionFactory().getCurrentSession().createSQLQuery(queryString);
         Object retVal = sqlQuery.uniqueResult();
-        System.out.println("VVVVVVVVVVVVIJAY "+(( Number) retVal ).longValue());
         return (( Number) retVal ).longValue();
-
-/*
-		System.out.println("queryString: "+queryString);
-		SQLQuery sqlQuery = this.getSessionFactory().getCurrentSession().createSQLQuery(queryString);
-		
-		List<Object[]> results = sqlQuery.list();
-		List<ExamPaper> list= new ArrayList<ExamPaper>(); 
-		
-		Iterator it = results.iterator();
-	
-		while(it.hasNext()){
-		     Object[] line = (Object[]) it.next();
-			 //String totalSubmission = Integer.parseInt(line[0].toString());
-			 //String totalSubmission = line[0].toString();
-			 //Integer.valueOf((String) object);
-			 
-		     totalSubmission = ((BigInteger) line[0]).intValue();
-		}
-		
-		//int i = Integer.parseInt(totalSubmission);
-		return totalSubmission;
-*/
 	}
 
 /*
@@ -191,7 +168,6 @@ success boolean*/
 		
 		String queryString = "INSERT INTO EXAMPAPER_DOWNLOAD_LOG "+
 							" VALUES ('"+module+"', '"+stno+"', '"+oldPath+"', '"+newPath+"', now(), "+success+", '"+error+"')";
-		System.out.println("queryString INSERTEXAMPAPERLOG: "+queryString);
 		
 		SQLQuery sqlQuery = this.getSessionFactory().getCurrentSession().createSQLQuery(queryString);
 		

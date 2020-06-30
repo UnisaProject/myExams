@@ -68,7 +68,7 @@ public class ExampaperdownloadController {
 			
 				ExamPaper examPaper=(ExamPaper)recordsGI_it.next();				 
 				String assignmentId = examPaper.getAssignmentid();
-				System.out.println("assignmentId " + assignmentId);
+				//System.out.println("assignmentId " + assignmentId);
 				String module = examPaper.getModule();
 				int successCount = 0;
 				int failCount = 0;
@@ -78,7 +78,7 @@ public class ExampaperdownloadController {
 				 //part 2
 				List recordsExamPapers = exampaperdownloadService.getSubmissions(assignmentId);
 				Iterator recordsExamPapersIterator = recordsExamPapers.iterator();
-				System.out.println("in recordsExamPapers size " + recordsExamPapers.size());
+				System.out.println(module+" ("+assignmentId+") in recordsExamPapers size " + recordsExamPapers.size());
 				while (recordsExamPapersIterator.hasNext()) {
 				
 					ExamPaperDetails examPaperDetails=(ExamPaperDetails) recordsExamPapersIterator.next();				 
@@ -156,7 +156,7 @@ public class ExampaperdownloadController {
 					e.printStackTrace();
 				}
 
-				System.out.println("AssignmentId = " + assignmentId);
+				//System.out.println("AssignmentId = " + assignmentId);
 			}
 
 		}
@@ -205,7 +205,7 @@ public class ExampaperdownloadController {
 		        if (targetChannel != null) {
 		        	sourceChannel.close();
 		        }
-				System.out.println("FINALLY == success "+success);
+				//System.out.println("FINALLY == success "+success);
 				return success;
 	        }   //finally
 	}// end  public static void copy ( File source,  File target)  
@@ -228,7 +228,7 @@ public class ExampaperdownloadController {
   
          // Send message  
          Transport.send(message);  
-         System.out.println("message sent successfully....");  
+         //System.out.println("message sent successfully....");  
   
       }catch (MessagingException mex) {
 		  
