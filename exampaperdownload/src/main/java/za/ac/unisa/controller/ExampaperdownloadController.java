@@ -103,12 +103,11 @@ public class ExampaperdownloadController {
 			        File destinationFile = new File(newFilePath); 
 					
 					// check if student has multiple submissions then do not download
-					Integer numberOfSubmissions = exampaperdownloadService.getCountSubmissionPerStudent(assignmentId, submitter );
+					Long numberOfSubmissions = exampaperdownloadService.getCountSubmissionPerStudent(assignmentId, submitter );
 					if (numberOfSubmissions >= 2) {
 						exampaperdownloadService.insertExamPaperLog(module, STUDENTNR, oldFilePath, "", false, "multiple uploads found for student ="+numberOfSubmissions);
 					} 
 					
-					if (numberOfSubmissions == 1) {
 						try {
 							boolean success = copy(source, destinationFile, createPath, module, STUDENTNR, oldFilePath, newFilePath);
 							//System.out.println("***** FILE COPIED SUCCESSFULLY ");
@@ -137,7 +136,6 @@ public class ExampaperdownloadController {
 							e.printStackTrace();
 							
 						} // end try */		       
-					} // end of if numberOfSubmissions == 1				
 				} // while (recordsExamPapersIterator.hasNext()) {
 				
 				try {

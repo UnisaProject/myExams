@@ -78,7 +78,8 @@ public class ExampaperdownloadDAO {
 				+ " and   asn_submission.submission_id = asn_submission_submitter.SUBMISSION_ID"
 				+ " and   asn_submission_submitter.SUBMITTER = sakai_user_id_map.user_id"
 				+ " and   asn_submission_attachments.submission_id = asn_submission_submitter.submission_id"
-				+ " and   asn_submission_attachments.attachment = CONCAT('/content',content_resource.resource_id)";
+				+ " and   asn_submission_attachments.attachment = CONCAT('/content',content_resource.resource_id)"
+				+ " STNUMBER, asn_submission.submitted_date";
 
 		SQLQuery sqlQuery = this.getSessionFactory().getCurrentSession().createSQLQuery(queryString);
 		List<Object[]> results = sqlQuery.list();
@@ -126,25 +127,28 @@ public class ExampaperdownloadDAO {
 		     list.add(eq);
 		}
 		
- 
-
 		return list;
 	}
 
-	public Integer getCountSubmissionPerStudent(String assignmentId, String user_id) {
+	public Long getCountSubmissionPerStudent(String assignmentId, String user_id) {
 		
 		//siteId = "MNM3714-2018-10";
 		//examTitle = "Sonette Test";
-		
-		Integer totalSubmission = 0;
-		String queryString = "select count(*) as TOTAL"+
+			
+		String queryString = "select count(*) as TOTAL "+
 							"from asn_submission, asn_submission_submitter,asn_submission_attachments "+
 							"where assignment_id = '"+assignmentId+"' "+
 							"and   asn_submission.submission_id = asn_submission_submitter.SUBMISSION_ID "+
 							"and   asn_submission_submitter.SUBMITTER = '"+user_id+"'"+
 							"and   asn_submission_attachments.submission_id = asn_submission_submitter.submission_id ";
 
+        System.out.println("queryString: "+queryString);
+        SQLQuery sqlQuery = this.getSessionFactory().getCurrentSession().createSQLQuery(queryString);
+        Object retVal = sqlQuery.uniqueResult();
+        System.out.println("VVVVVVVVVVVVIJAY "+(( Number) retVal ).longValue());
+        return (( Number) retVal ).longValue();
 
+/*
 		System.out.println("queryString: "+queryString);
 		SQLQuery sqlQuery = this.getSessionFactory().getCurrentSession().createSQLQuery(queryString);
 		
@@ -158,12 +162,13 @@ public class ExampaperdownloadDAO {
 			 //String totalSubmission = Integer.parseInt(line[0].toString());
 			 //String totalSubmission = line[0].toString();
 			 //Integer.valueOf((String) object);
+			 
 		     totalSubmission = ((BigInteger) line[0]).intValue();
 		}
 		
 		//int i = Integer.parseInt(totalSubmission);
 		return totalSubmission;
-
+*/
 	}
 
 /*
