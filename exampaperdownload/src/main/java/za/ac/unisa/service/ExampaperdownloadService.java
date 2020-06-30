@@ -34,7 +34,7 @@ public class ExampaperdownloadService {
 		this.exampaperdownloadDAO.insertExamPaperLog(module, stno, oldPath, newPath, success, error );
 	}	
 	
-	public Integer getCountSubmissionPerStudent(String assignmentId, String userId) {
+	public Long getCountSubmissionPerStudent(String assignmentId, String userId) {
 		return this.exampaperdownloadDAO.getCountSubmissionPerStudent(assignmentId, userId );
 	}
 }
